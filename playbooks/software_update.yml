@@ -1,0 +1,10 @@
+# Update all packages
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  - name: Update all packages to their latest version
+    apt:
+      update_cache: yes
+      name: "*"
+      state: latest

@@ -1,5 +1,4 @@
-# set hostnames playbook
-
+# Set hostnames playbook
 ---
 - hosts: ubuntu
   become: yes
@@ -7,3 +6,5 @@
   - name: "update hostnames"
     hostname:
       name: "{{ inventory_hostname }}"
+  - name: "reboot"
+    reboot:

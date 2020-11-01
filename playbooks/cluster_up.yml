@@ -1,0 +1,14 @@
+# Install a snap with classic confinement
+---
+- hosts: k8s_master
+  tasks:
+  - command: microk8s add-node
+    register: add_node_output
+  - debug:
+      var: add_node_output.stdout_lines[1]
+
+- hosts: k8s_worker[0]
+  tasks:
+  - shell: "{{hostvars['ubuntu0']['add_node_output'].stdout_lines[1]}}"
+    register: output_from_worker
+  - debug: msg="{{output_from_worker}}"
