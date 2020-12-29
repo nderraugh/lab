@@ -1,0 +1,12 @@
+---
+- import_playbook: sshpass_pre.yml
+- import_playbook: sshpass_post.yml
+- import_playbook: wipefs.yml
+- import_playbook: software_update.yml
+- import_playbook: hostnames.yml
+- import_playbook: cgroups.yml
+- import_playbook: etc_hosts.yml
+- import_playbook: iscsi.yml
+- import_playbook: microk8s.yml
+- import_playbook: cluster_up.yml
+- import_playbook: microk8s_enable.yml

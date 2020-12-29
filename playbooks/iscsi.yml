@@ -1,0 +1,10 @@
+# Enable iscsi to support OpenEBS
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  - name: Enable service iscsid and start it
+    systemd:
+      name: iscsid
+      enabled: yes
+      state: started

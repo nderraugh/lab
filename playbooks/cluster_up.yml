@@ -1,14 +1,67 @@
 # Install a snap with classic confinement
 ---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  - name: set firewall rules
+    command: iptables -P FORWARD ACCEPT
+
 - hosts: k8s_master
   tasks:
-  - command: microk8s add-node
+  - name: microk8s add-node
+    command: microk8s add-node
     register: add_node_output
   - debug:
       var: add_node_output.stdout_lines[1]
 
 - hosts: k8s_worker[0]
   tasks:
-  - shell: "{{hostvars['ubuntu0']['add_node_output'].stdout_lines[1]}}"
+  - name: microk8s join (k8s_worker[0])
+    shell: "{{hostvars['ubuntu0']['add_node_output'].stdout_lines[1]}}"
+    async: 600
+    poll: 10
     register: output_from_worker
   - debug: msg="{{output_from_worker}}"
+  - name: microk8s status --wait-ready
+    command: microk8s status --wait-ready
+    timeout: 600
+
+- hosts: k8s_master
+  tasks:
+  - name: microk8s add-node
+    command: microk8s add-node
+    register: add_node_output
+  - debug:
+      var: add_node_output.stdout_lines[1]
+
+- hosts: k8s_worker[1]
+  tasks:
+  - name: microk8s join (k8s_worker[1])
+    shell: "{{hostvars['ubuntu0']['add_node_output'].stdout_lines[1]}}"
+    async: 600
+    poll: 10
+    register: output_from_worker
+  - debug: msg="{{output_from_worker}}"
+  - name: microk8s status --wait-ready
+    command: microk8s status --wait-ready
+    timeout: 600
+
+- hosts: k8s_master
+  tasks:
+  - name: microk8s add-node
+    command: microk8s add-node
+    register: add_node_output
+  - debug:
+      var: add_node_output.stdout_lines[1]
+
+- hosts: k8s_worker[2]
+  tasks:
+  - name: microk8s join (k8s_worker[2])
+    shell: "{{hostvars['ubuntu0']['add_node_output'].stdout_lines[1]}}"
+    async: 600
+    poll: 10
+    register: output_from_worker
+  - debug: msg="{{output_from_worker}}"
+  - name: microk8s status --wait-ready
+    command: microk8s status --wait-ready
+    timeout: 600

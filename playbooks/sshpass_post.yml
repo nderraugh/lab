@@ -1,0 +1,8 @@
+- hosts: ubuntu
+  gather_facts: false
+  tasks:
+    - name: "Setup the public key authentication"
+      authorized_key:
+        state: present
+        user: "{{ ansible_user }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

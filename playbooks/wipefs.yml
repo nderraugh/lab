@@ -1,0 +1,7 @@
+# Remove any fs from /dev/sda to prepare disks for OpenEBS
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  - name: wipefs -a -f /dev/sda
+    command: wipefs -a -f /dev/sda

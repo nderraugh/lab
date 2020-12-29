@@ -1,0 +1,18 @@
+- hosts: ubuntu
+  gather_facts: false
+  tasks:
+    - name: "Check if host is reachable"
+      wait_for:
+        timeout: 10
+      register: connect_rs
+      ignore_unreachable: yes
+    - when: connect_rs is unreachable
+      name: "Try first login and change the password"
+      delegate_to: localhost
+      expect:
+        command: sshpass -p ubuntu ssh {{ ansible_user }}@{{ ansible_ssh_host }}
+        timeout: 10
+        responses:
+          "Current password:": "{{ ansible_user }}"
+          "New password:": "{{ passwordstore_ubuntu_pass }}"
+          "Retype new password:": "{{ passwordstore_ubuntu_pass }}"

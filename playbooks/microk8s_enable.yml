@@ -1,0 +1,7 @@
+# Install a snap with classic confinement
+---
+
+- hosts: k8s_master
+  tasks:
+  - name: microk8s enable rbac dns metrics-server prometheus
+    command: microk8s enable rbac dns metrics-server prometheus
