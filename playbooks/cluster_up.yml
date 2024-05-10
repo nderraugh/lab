@@ -8,6 +8,11 @@
 
 - hosts: k8s_master
   tasks:
+  #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html
+  - name: TODO complete the new step of `microk8s start`
+    ansible.builtin.fail:
+      msg: TODO complete the new step of `microk8s start`
+    when: true
   - name: microk8s add-node
     command: microk8s add-node
     register: add_node_output

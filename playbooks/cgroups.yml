@@ -2,12 +2,25 @@
 # (required!) are not enabled by default
 # https://microk8s.io/docs/install-alternatives#heading--arm
 ---
+
+
 - hosts: ubuntu
   become: yes
   tasks:
   - name: Set cgroups
     lineinfile:
       path: /boot/firmware/cmdline.txt
-      regexp: '^net.ifnames=0 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline rootwait fixrtc$'
-      state: present
-      line: net.ifnames=0 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline rootwait fixrtc cgroup_enable=memory cgroup_memory=1
+      regexp: '^(.*)$'
+      backrefs: yes
+      line: '\1 cgroup_enable=memory cgroup_memory=1'
+  #    #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html
+#  - name: TODO this regex path update is adding a second line instead of updating the one that's there.
+#    ansible.builtin.fail:
+#      msg: TODO this regex path update is adding a second line instead of updating the one that's there.
+#    when: true
+  - name: Trim cgroups
+    lineinfile:
+      path: /boot/firmware/cmdline.txt
+      regexp: '^(.*)(( cgroup_enable=memory cgroup_memory=1){2,})$'
+      backrefs: yes
+      line: '\1 cgroup_enable=memory cgroup_memory=1'

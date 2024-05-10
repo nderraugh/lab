@@ -3,5 +3,10 @@
 
 - hosts: k8s_master
   tasks:
-  - name: microk8s enable rbac dns metrics-server prometheus
-    command: microk8s enable rbac dns metrics-server prometheus
+    #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html
+  - name: TODO deprecated enable multiple addons in one command
+    ansible.builtin.fail:
+      msg: "TODO WARNING: Do not enable or disable multiple addons in one command. \n         This form of chained operations on addons will be DEPRECATED in the future.\n         Please, enable one addon at a time: 'microk8s enable <addon>'"
+    when: true
+  - name: microk8s enable rbac dns metrics-server prometheus openebs
+    command: microk8s enable rbac dns metrics-server prometheus openebs

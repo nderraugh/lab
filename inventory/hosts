@@ -1,8 +1,8 @@
 [ubuntu]
-ubuntu0 ansible_ssh_host=192.168.12.60
-ubuntu1 ansible_ssh_host=192.168.12.61
-ubuntu2 ansible_ssh_host=192.168.12.62
-ubuntu3 ansible_ssh_host=192.168.12.63
+ubuntu0 ansible_ssh_host=192.168.0.60
+ubuntu1 ansible_ssh_host=192.168.0.61
+ubuntu2 ansible_ssh_host=192.168.0.62
+ubuntu3 ansible_ssh_host=192.168.0.63
 
 [ubuntu:vars]
 ansible_user=ubuntu

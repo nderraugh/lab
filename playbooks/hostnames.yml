@@ -8,3 +8,4 @@
       name: "{{ inventory_hostname }}"
   - name: "reboot"
     reboot:
+    when: ansible_facts['hostname'] != inventory_hostname
